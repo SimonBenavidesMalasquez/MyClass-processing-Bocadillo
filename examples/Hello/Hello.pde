@@ -1,19 +1,24 @@
-import template.library.*;
+import mylibrary.bocadillo.*;
 
-HelloLibrary hello;
+Clase_Crea_Bocadillo bocadillo ;
+
+//MyClass clase ; 
 
 void setup() {
-  size(400,400);
-  smooth();
   
-  hello = new HelloLibrary(this);
+   size(400,400);
   
-  PFont font = createFont("",40);
-  textFont(font);
+   bocadillo = new Clase_Crea_Bocadillo(this);
+
+   //clase = new MyClass(this);
+
 }
 
 void draw() {
-  background(0);
-  fill(255);
-  text(hello.sayHello(), 40, 200);
+  
+    background(0);
+
+    bocadillo.dibuja(true, mouseX, mouseY, "prueba A");
+    
+    //clase.show();
 }
