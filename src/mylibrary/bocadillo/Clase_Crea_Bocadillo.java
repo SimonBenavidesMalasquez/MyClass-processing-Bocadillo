@@ -2,34 +2,28 @@ package mylibrary.bocadillo;
 
 import processing.core.*;
 
+// INICIO : 12-may-2022
 
 public class Clase_Crea_Bocadillo {
 	
 	// myParent is a reference to the parent sketch
-	PApplet myParent;
+	PApplet p;
 
-    int x0 = 0 ;    int off_Set_x =    0 ;   
-    int y0 = 0 ;    int off_Set_y = - 22 ;
+    int      x0 = 0 ;  
+    int      y0 = 0 ;   
+    int offSetY = - 22 ;
+    int width_Box = 0 ;
 
-    int ancho = 0 ;
-
-    int off_Set_y_texto =  18 ;
-
-    String   texto_main = "none" ;
+    int tema = 1 ; 
     
-    Funciones_Processing p ;
-
-	public Clase_Crea_Bocadillo(PApplet theParent) {
+	  public Clase_Crea_Bocadillo(PApplet theParent) {
 		
-		// Initialize : 
-		myParent = theParent;
-		
-		p = new Funciones_Processing( myParent );
+		    p = theParent;
 		
         // MENSAJE LIBRERIA 
-        System.out.println("Load Library Simon : Clase Bocadillo Jumper / 12-may-2022 / 0-02" );
+        System.out.println("Load Library Simon : Clase Bocadillo Jumper / 11-oct-2022 / 0-02" );
 		
-	}
+	  }
 	
     public void dibuja( boolean enable, int x , int y  , String in_texto ){
 
@@ -38,164 +32,122 @@ public class Clase_Crea_Bocadillo {
              // CONTIENE TEXTO : 
              if( in_texto.equals("") == false ){
 
-                  texto_main = in_texto ;
+                  x0 = x  ;
+                  y0 = y + offSetY ;
 
-                  set_position( x, y );
-
-                  dibuja_cuadro_ON( x0, y0 );
-
-                  texto_cuadro();
-         
-             // TEXTO = ""    ( vacio )
-             }else{
-
-                  texto_main = "Falta nombrar Net, Clic derecho" ; 
-
-                  set_position( x, y ); 
-
-                  dibuja_cuadro_OFF( x0, y0 ); 
-
-                  texto_cuadro(); 
+                  cuadro( in_texto , x0, y0 );
+                  dibuja_texto( in_texto ); 
 
              }
-
         }
 
     }
     
 
-    public void texto_cuadro(){
+      public void dibuja_texto( String texto ){     
 
-           p.textAlign(myParent.CENTER); p.textSize(14.0f); p.fill(250);
-           p.text( texto_main , x0 + off_Set_x , y0 + off_Set_y + off_Set_y_texto );
+           p.textAlign(p.CENTER); p.textSize(14.0f); p.fill(250);
+           p.text( texto , x0  , y0 + offSetY + 18 );
 
-    }
+      }
     
-    public void dibuja_cuadro_ON( int x , int y ){
+      public void cuadro( String texto, int x , int y ){
            
-            // Asigna tamaño texto : para hacer minimo 5 
-           int longitud_texto = asigna_longitud_text( texto_main );
-
-           // Ancho cuadro
-           ancho = (int)(longitud_texto*9.0) ;
+           // Asigna tamaño texto : para hacer minimo 5 
+           p.textSize(14.0f);
+           width_Box =(int) p.textWidth(texto) + 20 ; //    asigna_longitud_text( texto );
 
            // Sombra cuadro 
-           sombra_cuadro( x, y, ancho , 25 );
+           sombra_cuadro( x, y, width_Box , 25 , tema );
 
            // Cuadro main
-           main_cuadro( x, y, ancho , 25 );
+           main_cuadro( x, y, width_Box , 25 , tema );
 
+           // Triangulito
+           triangulo( x - (int)(width_Box*0.5f), y , width_Box , 25 , tema );
 
            //stroke(0,110,175); fill(25);     // azul
            //stroke(224,139,2); fill(25);     // amarillo dark
            //stroke(255,215,0); fill(25);     // amarillo
            
-    }
-    
-    public void dibuja_cuadro_OFF( int x , int y ){
-        
-        // Asigna tamaño texto : para hacer minimo 5 
-       int longitud_texto = asigna_longitud_text( texto_main );
-
-       // Ancho cuadro
-       ancho = (int)(longitud_texto*9.0) ;
-
-       // Sombra cuadro 
-       sombra_cuadro( x, y, ancho , 25 );
-
-
-       x = (int)( x - ancho*0.5 );
-
-       p.strokeWeight(1.5f);
-       p.stroke(200,20,20); p.fill(100,10,10); 
-       p.rect( x + off_Set_x, y + off_Set_y , ancho , 25 , 8 );
-       p.strokeWeight(1.0f); 
-
-
-       // Triangulito
-       dibuja_triangulito( x, y , ancho , 25 , "red");
-
-       //stroke(0,110,175); fill(25);     // azul
-       //stroke(224,139,2); fill(25);     // amarillo dark
-       //stroke(255,215,0); fill(25);     // amarillo
-       
-     }
-    
-      public void sombra_cuadro( int x, int  y , int w , int h ){
-
-        x = (int)( x - w*0.5 );
-
-        // El número -2 , 4 , se uso para agrandar cuadro y hacer la sombra
-        p.strokeWeight(1.0f); 
-        p.noStroke(); p.fill(60);
-        p.rect( x - 2 + off_Set_x, y - 2 + off_Set_y , w + 4 , h + 4 , 8 );
-        p.strokeWeight(1.0f); 
-       
       }
+    
+      public void sombra_cuadro( int x, int  y , int w , int h , int tema ){                            
 
-      public void main_cuadro( int x, int  y , int w , int h ){
-       
           x = (int)( x - w*0.5 );
 
+          // El número -2 , 4 , se uso para agrandar cuadro y hacer la sombra
+
+
+          switch( tema ){
+
+              case 1 : p.noStroke(); p.fill(60);  break ;
+              case 2 : p.noStroke(); p.fill(60);  break ;
+              case 3 : p.noStroke(); p.fill(60);  break ;
+             
+              default :  p.noStroke(); p.fill(60); 
+          }
+
+          p.strokeWeight(1.0f); 
+          p.rect( x - 2 , y - 2 + offSetY , w + 4 , h + 4 , 8 );
+          p.strokeWeight(1.0f); 
+       
+      }
+
+      public void main_cuadro( int x, int  y , int w , int h , int tema ){                              
+       
+          x = (int)( x - w*0.5 );
+          
+          // TEMA 
+          switch( tema ){
+
+              case 1 : p.stroke(255,215,0); p.fill(25);  break ;
+              case 2 : p.stroke(0,150,220); p.fill(35);  break ;
+              case 3 : p.stroke(120,120,120); p.fill(25);  break ;
+             
+              default :  p.stroke(255,215,0); p.fill(25);  
+          }
+  
           p.strokeWeight(1.5f);
-          p.stroke(255,215,0); p.fill(25); 
-          p.rect( x + off_Set_x, y + off_Set_y , w , h , 8 );
+          p.rect( x , y + offSetY , w , h , 8 );
           p.strokeWeight(1.0f); 
 
-          // Triangulito
-          dibuja_triangulito( x, y , w , h , "yellow");
-
       }
       
-      public void dibuja_triangulito( int x, int  y , int w , int h , String colorcito ){
+      public void triangulo( int x, int  y , int w , int h , int tema ){
 
-          if( colorcito.equals("yellow") == true ){
-        	  p.noStroke(); p.fill(255,215,0);
-          }else if( colorcito.equals("red") == true ){
-        	  p.noStroke(); p.fill( 200,20,20 );
+
+          // TEMA 
+          switch( tema ){
+
+              case 1 : p.noStroke(); p.fill(255,215,0);  break ;
+              case 2 : p.noStroke(); p.fill(0,150,220);  break ;
+              case 3 : p.noStroke(); p.fill(120,120,120);  break ;
+             
+              default : p.noStroke(); p.fill(255,215,0); 
           }
 
+          // Triangulito 
+          p.beginShape();
+          p.vertex( x + w*0.5f - 10 , y + h + offSetY );
+          p.vertex( x + w*0.5f + 10 , y + h + offSetY );
+          p.vertex( x + w*0.5f      , y + h + 10 + offSetY );
 
-          myParent.beginShape();
-          myParent.vertex( x + w*0.5f - 10 + off_Set_x, y + h + off_Set_y);
-          myParent.vertex( x + w*0.5f + 10 + off_Set_x, y + h + off_Set_y);
-          myParent.vertex( x + w*0.5f + off_Set_x, y + h  + 10 + off_Set_y);
-
-          myParent.vertex( x + w*0.5f - 10 + off_Set_x, y + h + off_Set_y);
-          myParent.endShape();
-
-      }
-
-      public int asigna_longitud_text( String in_texto ){
-         
-          int longitud_texto = 0 ;
-
-          if( in_texto.length() <= 10 ){
-              longitud_texto = 10 ;
-          }else if( in_texto.length() > 10 ){
-              longitud_texto = in_texto.length() ;
-          }
-
-          return longitud_texto ;
-   
-      }
-      
-      // --------------------------------------------------------------------
-      //                         ABSTRACCIÓN 
-
-      public void set_position( int x, int y ){
-
-      	  x0 = x + off_Set_x ;
-      	  y0 = y + off_Set_y ;
+          p.vertex( x + w*0.5f - 10 , y + h + offSetY );
+          p.endShape();
 
       }
 
       public int getWidthMediun(){
-          return (int)(ancho*0.5);
+          return (int)(width_Box*0.5);
       }
      
       public int getY0(){
-          return (y0 + off_Set_y ) ;
+          return ( y0 + offSetY ) ;
+      }
+      
+      public void setTema( int inTema ) {
+    	  tema = inTema ;
       }
 	
 
