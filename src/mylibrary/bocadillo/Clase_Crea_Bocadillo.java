@@ -9,47 +9,40 @@ public class Clase_Crea_Bocadillo {
 	// myParent is a reference to the parent sketch
 	PApplet p;
 
-    int      x0 = 0 ;  
-    int      y0 = 0 ;   
-    int offSetY = - 22 ;
-    int width_Box = 0 ;
-
-    int tema = 1 ; 
+        int      x0 = 0 ;  
+        int      y0 = 0 ;   
+        int offSetY = - 22 ;
+        int width_Box = 0 ;
+    
+        int tema = 1 ; 
     
 	  public Clase_Crea_Bocadillo(PApplet theParent) {
 		
 		    p = theParent;
 		
-        // MENSAJE LIBRERIA 
-        System.out.println("Load Library Simon : Clase Bocadillo Jumper / 11-oct-2022 / 0-02" );
-		
 	  }
 	
-    public void dibuja( boolean enable, int x , int y  , String in_texto ){
-
-        if( enable == true ){ 
-
-             // CONTIENE TEXTO : 
-             if( in_texto.equals("") == false ){
-
-                  x0 = x  ;
-                  y0 = y + offSetY ;
-
-                  cuadro( in_texto , x0, y0 );
-                  dibuja_texto( in_texto ); 
-
-             }
-        }
-
-    }
+        public void dibuja( boolean enable, int x , int y  , String in_texto ){
     
-
-      public void dibuja_texto( String texto ){     
-
-           p.textAlign(p.CENTER); p.textSize(14.0f); p.fill(250);
-           p.text( texto , x0  , y0 + offSetY + 18 );
-
-      }
+            if( enable == true ){ 
+    
+                 // CONTIENE TEXTO : 
+                 if( in_texto.equals("") == false ){
+    
+                      x0 = x  ;
+                      y0 = y + offSetY ;
+    
+                      cuadro( in_texto , x0, y0 );
+                      
+                      // TEXTO
+                      p.textAlign(p.CENTER); p.textSize(14.0f); p.fill(250);
+                      p.text( in_texto , x0  , y0 + offSetY + 18 );
+    
+                 }
+            }
+    
+        }
+    
     
       public void cuadro( String texto, int x , int y ){
            
