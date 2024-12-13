@@ -15,21 +15,6 @@ public class MyClass{
         bocadito.dibuja(true, mouseX, mouseY, "prueba B ");
 
         
-
-
-
      }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
